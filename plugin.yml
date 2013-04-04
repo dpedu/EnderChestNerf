@@ -1,0 +1,20 @@
+#
+# EnderChestNerf
+# Makes enderchests more fair
+#
+name: EnderChestNerf
+main: com.dpedu.ecnerf.ECNerf
+version: 0.1
+description: Makes enderchests more fair
+author: dpedu
+commands:
+  ecntest:
+    description: Test command
+    aliases: []
+    permission: ecn.*
+    usage: /ecntest
+permissions:
+  ecn.*:
+    description: Allows testing of enderchestnerf
+    default: op
+
