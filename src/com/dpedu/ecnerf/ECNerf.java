@@ -107,29 +107,28 @@ public class ECNerf extends JavaPlugin implements Listener {
 	}
 	@EventHandler
 	public void onBlockPlace(BlockPlaceEvent event) {
-        Block block = (Block) event.getBlockPlaced();
-        if(block.getType()==Material.ENDER_CHEST) {
-        	// When an enderchest is placed, we need to catch and save it.
-        	// Figure out the owner's name
-        	ItemStack placedChest = event.getItemInHand();
-        	ItemMeta blockInfo = placedChest.getItemMeta();
-        	String[] chestName;
-        	String chestOwnerName;
-        	try {
-        		chestName = blockInfo.getDisplayName().split("'");
-        		chestOwnerName = chestName[0];
-        	} catch(Exception e) {
-        		event.setCancelled(true);
-        		return;
-        	}
-        	// Since we're placing a block, we can assume that there isn't a record for this already.
-        	BlockState placedAt = event.getBlockReplacedState();
-        	PlacedChestData cb = new PlacedChestData(placedAt.getX(), placedAt.getY(), placedAt.getZ(), chestOwnerName, event.getPlayer().getWorld().getName());
-        	placedCache.add(cb);
-        	System.out.println("Placed an enderchest with owner '"+chestOwnerName+"' at "+placedAt.getX()+","+placedAt.getY()+","+placedAt.getZ());
-        	// Save the data to disk
-        	saveCache();
-        }
+		Block block = (Block) event.getBlockPlaced();
+		if(block.getType()==Material.ENDER_CHEST) {
+			// When an enderchest is placed, we need to catch and save it.
+			// Figure out the owner's name
+			ItemStack placedChest = event.getItemInHand();
+			ItemMeta blockInfo = placedChest.getItemMeta();
+			String[] chestName;
+			String chestOwnerName;
+			try {
+				chestName = blockInfo.getDisplayName().split("'");
+				chestOwnerName = chestName[0];
+			} catch(Exception e) {
+				event.setCancelled(true);
+				return;
+			}
+			// Since we're placing a block, we can assume that there isn't a record for this already.
+			BlockState placedAt = event.getBlockReplacedState();
+			PlacedChestData cb = new PlacedChestData(placedAt.getX(), placedAt.getY(), placedAt.getZ(), chestOwnerName, event.getPlayer().getWorld().getName());
+			placedCache.add(cb);
+			// Save the data to disk
+			saveCache();
+		}
 	}
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent event) {
@@ -165,12 +164,12 @@ public class ECNerf extends JavaPlugin implements Listener {
 	}
 
 	@EventHandler
-    public void onInventoryClick(InventoryClickEvent event) {
-        if (event.getInventory().getType() == InventoryType.ANVIL && event.getCurrentItem().getType()==Material.ENDER_CHEST) {
-        	// Block moving of an Ebder chest into the Anvil
-            event.setCancelled(true);
-        }
-    }
+	public void onInventoryClick(InventoryClickEvent event) {
+		if (event.getInventory().getType() == InventoryType.ANVIL && event.getCurrentItem().getType()==Material.ENDER_CHEST) {
+			// Block moving of an Ender chest into the Anvil
+			event.setCancelled(true);
+		}
+	}
 	// Automatically name an item when crafted
 	@EventHandler
 	public void onCraftItem(CraftItemEvent event) {
